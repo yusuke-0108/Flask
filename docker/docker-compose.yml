@@ -1,0 +1,7 @@
+version: '3'
+services:
+  flask_env:
+    build: .
+    volumes:
+      - ..:/work
+    tty: true

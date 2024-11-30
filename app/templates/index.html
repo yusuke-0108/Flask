@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Lists
+{% endblock %}
+
+{% block content %}
+<h1>Lists</h1>
+{% for to_do in to_do_lists %}
+<div>
+    <h2>
+        <form action="{{ url_for('task_delete', id=to_do.id) }}" method="POST">  
+            <input class="checkbox" type="submit" value="✓">
+            {{to_do.title}}
+        </form>
+    </h2>
+    <ul class="list-ul">
+        <li class="list-li">ユーザー： {{to_do.name}}</li>
+        <li class="list-li">日時： {{to_do.date}}</li>
+        <li class="list-li">場所： {{to_do.place}}</li>
+        <li class="list-li">詳細： {{to_do.body}}</li>
+    </ul>
+</div>
+{% endfor %}
+{% endblock  %}
