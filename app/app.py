@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for
 import os
 from werkzeug.utils import secure_filename
-from models.models import ToDo
+from models.models import Task
 from models.database import db_session
 
 app = Flask(__name__)
@@ -24,12 +24,12 @@ def hello():
 
 @app.route("/index")
 def index():
-    to_do_lists = ToDo.query.all()
+    to_do_lists = Task.query.all()
     return render_template("index.html",to_do_lists=to_do_lists)
 
 @app.route("/home")
 def home():
-    to_do_lists = ToDo.query.all()
+    to_do_lists = Task.query.all()
     return render_template("home.html",to_do_lists=to_do_lists)
 
 @app.route("/add", methods=["post"])
@@ -39,15 +39,16 @@ def add():
     date = request.form["date"]
     place = request.form["place"]
     body = request.form["body"]
+    user_id = 1
     
-    content = ToDo(title, name, date, place, body)
+    content = Task(title, name, date, place, body)
     db_session.add(content)
     db_session.commit()
     return home()
 
 @app.route("/delete/<int:id>", methods=["post"])
 def task_delete(id):
-    content = ToDo.query.get(id)
+    content = Task.query.get(id)
     db_session.delete(content)
     db_session.commit()
     return index()
