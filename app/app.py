@@ -27,9 +27,10 @@ def index():
     to_do_lists = ToDo.query.all()
     return render_template("index.html",to_do_lists=to_do_lists)
 
-@app.route("/register")
-def register():
-    return render_template("register.html")
+@app.route("/home")
+def home():
+    to_do_lists = ToDo.query.all()
+    return render_template("home.html",to_do_lists=to_do_lists)
 
 @app.route("/add", methods=["post"])
 def add():
@@ -42,7 +43,7 @@ def add():
     content = ToDo(title, name, date, place, body)
     db_session.add(content)
     db_session.commit()
-    return index()
+    return home()
 
 @app.route("/delete/<int:id>", methods=["post"])
 def task_delete(id):

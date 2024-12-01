@@ -7,6 +7,7 @@ nav {
     justify-content: space-around;
     height: 10%;
     color: white;
+    border-bottom: solid black 1pt;
     ul {
         width: 30%;
         font-size: 21px;
@@ -19,6 +20,10 @@ nav {
     }
 }
 
+a {
+  color: white;
+}
+
 .app-name {
     width: 15%;
     text-align: center;
@@ -26,8 +31,10 @@ nav {
     text-decoration: underline;
 }
 
-.content {
-    margin: 30px;
+.post-form {
+    margin-left: 2%;
+    width: 50%;
+    margin-top: 2%;
 }
 
 .list-ul {
@@ -48,6 +55,47 @@ nav {
     font-style: bold;
 }
 
+/* テキストボックス */
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  label {
+    width: 20%;
+    text-align: left;
+    font-weight: bold;
+  }
+}
+
+.textbox{
+  width: 50%;
+	padding: 10px 15px; /*ボックスを大きくする*/
+	font-size: 16px;
+	border-radius: 3px; /*ボックス角の丸み*/
+	border: 2px solid black; /*枠線*/
+	box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+  background-color: #ddd;
+}
+
+.textarea {
+  width: 50%;
+  height: 40%;
+  padding: 10px 15px; /*ボックスを大きくする*/
+	font-size: 16px;
+	border-radius: 3px; /*ボックス角の丸み*/
+	border: 2px solid black; /*枠線*/
+	box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+  background-color: #ddd;
+}
+
+.btn-submit {
+  width: 10%;
+  height: 8%;
+  font-size: 14pt;
+  color: #fff;
+  background-color: #e98a46;
+  border-radius: 100vh;
+}
 /* アイコン */
 .logo {
     margin-left: 1%;
