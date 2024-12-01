@@ -32,25 +32,29 @@ def home():
     return render_template("home.html",to_do_lists=to_do_lists)
 
 @app.route("/add", methods=["post"])
+@login_required
 def add():
     title = request.form["title"]
     name = request.form["name"]
     date = request.form["date"]
     place = request.form["place"]
     body = request.form["body"]
-    user_id = 1
+    user_id = current_user.id
     
-    content = Task(title, name, date, place, body)
+    content = Task(title, name, date, place, body, user_id)
     db_session.add(content)
     db_session.commit()
-    return home()
+    return redirect(url_for('home'))
 
 @app.route("/delete/<int:id>", methods=["post"])
+@login_required
 def task_delete(id):
     content = Task.query.get(id)
-    db_session.delete(content)
-    db_session.commit()
-    return index()
+    
+    if current_user.id == content.user_id:
+        db_session.delete(content)
+        db_session.commit()
+    return redirect(url_for('home'))
 
 @app.route("/user")
 def user():
