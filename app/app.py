@@ -1,22 +1,18 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
-from models.models import Task
+from models.models import Task, User
 from models.database import db_session
-
+from flask_login import LoginManager, current_user, login_user
+from app.forms import LoginForm
+import secrets
 app = Flask(__name__)
 
-# アップロードされたファイルを保存するディレクトリ
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# シークレットキーを設定
+app.secret_key = secrets.token_hex(16) 
 
-# 許可するファイルの拡張子
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-def allowed_file(filename):
-    if '.' in filename:
-        return filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    return False
+# LoginManagerの起動
+login = LoginManager(app)
 
 @app.route("/")
 def hello():
@@ -58,6 +54,26 @@ def user():
     name = request.args.get("name")
     return render_template("user.html", name=name)
 
+# ログイン機構
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
+@app.route('/login', methods=['get', 'post'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    
+    form = LoginForm()
+    
+    if form.validate_on_submit():
+        user = User.query.filter_by(user_name=form.user_name.data).one_or_none()
+        if user is None or not user.check_password(form.password.data):
+            return redirect(url_for('login'))
+
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('home'))
+    return render_template('login.html', form=form)
+    
 if __name__ == "__main__":
     app.run(debug=True)
