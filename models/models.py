@@ -45,15 +45,15 @@ class User(Base, UserMixin):
     
     task = relationship("Task", back_populates="user")
     
-    def __init__(self, user_name, hashed_pass):
+    def __init__(self, user_name, email):
         self.user_name = user_name
-        self.hashed_pass = hashed_pass
+        self.email = email
     
     def __repr__(self):
         return '<Name %r>' % (self.user_name)
     
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.hashed_pass = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.hashed_pass, password)

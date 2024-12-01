@@ -3,9 +3,10 @@ import os
 from werkzeug.utils import secure_filename
 from models.models import Task, User
 from models.database import db_session
-from flask_login import LoginManager, current_user, login_user
-from app.forms import LoginForm
+from flask_login import LoginManager, current_user, login_user, login_required
+from app.forms import LoginForm, RegistrationForm
 import secrets
+
 app = Flask(__name__)
 
 # シークレットキーを設定
@@ -13,6 +14,7 @@ app.secret_key = secrets.token_hex(16)
 
 # LoginManagerの起動
 login = LoginManager(app)
+login.login_view = 'login'
 
 @app.route("/")
 def hello():
@@ -24,6 +26,7 @@ def index():
     return render_template("index.html",to_do_lists=to_do_lists)
 
 @app.route("/home")
+@login_required
 def home():
     to_do_lists = Task.query.all()
     return render_template("home.html",to_do_lists=to_do_lists)
@@ -74,6 +77,22 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('home'))
     return render_template('login.html', form=form)
+
+# ユーザー登録
+@app.route('/register', methods=['get', 'post'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     
+    form = RegistrationForm()
+    
+    if form.validate_on_submit():
+        user = User(user_name=form.user_name.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db_session.add(user)
+        db_session.commit()
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
 if __name__ == "__main__":
     app.run(debug=True)
