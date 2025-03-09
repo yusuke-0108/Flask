@@ -53,7 +53,8 @@ class User(Base, UserMixin):
         return '<Name %r>' % (self.user_name)
     
     def set_password(self, password):
-        self.hashed_pass = generate_password_hash(password)
+        if password is not None:
+            self.hashed_pass = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.hashed_pass, password)

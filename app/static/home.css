@@ -1,0 +1,135 @@
+.container {
+    display: flex;
+    width: 100%;
+    margin: 20px 0px;
+    gap: 50px;
+}
+
+/* 左側のプロフィール */
+.profile {
+    width: 60%;
+    background-color: #fff;
+    /* padding: 20px; */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile h2 {
+    margin-bottom: 15px;
+    color: #0984e3;
+}
+
+.profile-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.profile p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* 右側の投稿フォーム */
+.content {
+    width: 80%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-aside{
+    width: 100%;
+}
+.content h1 {
+    margin-bottom: 20px;
+    color: #0984e3;
+}
+
+.post-form {
+    width: 80%;
+}
+.form-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    label {
+      width: 25%;
+      text-align: left;
+      font-weight: bold;
+    }
+}
+
+.textbox{
+width: 50%;
+    padding: 10px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid black; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+background-color: #ddd;
+}
+
+.textarea {
+width: 50%;
+height: 40%;
+padding: 10px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid black; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+background-color: #ddd;
+}
+
+.btn-submit {
+width: 30%;
+height: 8%;
+font-size: 14pt;
+color: #fff;
+background-color: #e98a46;
+border-radius: 100vh;
+}
+/* .post-form .form-group {
+    margin-bottom: 15px;
+    width: 20%;
+}
+
+.post-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.textbox, .textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.textbox:focus, .textarea:focus {
+    border-color: #0984e3;
+    outline: none;
+}
+
+.textarea {
+    height: 100px;
+    resize: vertical;
+} */
+
+.btn-submit {
+    background-color: #0984e3;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #74b9ff;
+}

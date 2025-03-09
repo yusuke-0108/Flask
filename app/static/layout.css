@@ -1,0 +1,33 @@
+
+
+a {
+  color: white;
+}
+
+.nav {
+    width: 100%;
+    background-color: #2d3436;
+    float: right;
+    display: flex;
+    justify-content: space-around;
+    height: 10%;
+    color: white;
+    ul {
+        width: 50%;
+        font-size: 21px;
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 0;
+    }
+    li {
+        list-style: none;
+    }
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+    width: 100%;
+}

@@ -4,11 +4,18 @@
 Register
 {% endblock %}
 
-{% block header %}
-{% endblock header %}
-
 {% block content %}
 <h1>Register</h1>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p>{{msg}}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
 <form action="/register" method="post">
   {{ form.hidden_tag() }}
   <p>

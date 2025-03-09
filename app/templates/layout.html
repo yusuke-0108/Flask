@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
-<link rel="stylesheet" href="../static/custom.css">
+<link rel="stylesheet" href="/static/main.css">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock  %}</title>
 </head>
 
 <body>
-    <nav>
-        <p class="app-name">
-            Share Task
-        </p>
-        <ul>
-            <li>Lists  <span class="dli-list"><span></span><span></span><span></span></span></li>
-            <li><a href="{{url_for('home')}}">Home</a>  <span class="dli-home"></span></li>
-            <li>User  <span class="dli-user-fill"></span></li>
-        </ul>
-    </nav>
+    <div class="header">
+        <div class="container">
+            <nav class="nav">
+                <h1 class="logo">
+                    TaskShare
+                </h1>
+                <ul>
+                    <li class="nav-link"><a href="{{url_for('lists')}}">Lists</a>  <span class="dli-list"><span></span><span></span><span></span></span></li>
+                    <li class="nav-link">
+                        <a href="{{url_for('users')}}">
+                            User  <span class="dli-user-fill"></span>
+                        </a>    
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-link">
+                        <a href="{{ url_for('home', user_id=current_user.id) }}">Home</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                        <li class="nav-link">
+                            <a href="{{ url_for('login') }}">Login</a>                        </li>
+                        <li class="nav-link">
+                            <a href="{{ url_for('register') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
     <div class="content">
         {% block content %}{% endblock  %}
     </div>

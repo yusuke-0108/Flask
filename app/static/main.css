@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+@import url('layout.css');
+@import url('components.css');
+@import url('logo.css');
+@import url('top.css');
+@import url('home.css');
+@import url('users.css');
+.app-name {
+    width: 15%;
+    text-align: center;
+    font-size: 21px;
+    text-decoration: underline;
+}
+
+
+.URL {
+  color: blue;
+  font-size: 16pt;
+  text-decoration: underline;
+}
+
+.header {
+    width: 100%;
+}
+
+.content {
+    width: 95%;
+}

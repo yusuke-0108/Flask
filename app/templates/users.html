@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+register
+{% endblock %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+<h1>ユーザー一覧</h1>
+<div class="container">
+    <div class="user-list">
+        {% for user in users %}
+        <div class="user-card">
+            <ul class="list-ul">
+                <li class="list-li">
+                    <img src="{{ user.profile_image or '/static/images/default-profile.png' }}" alt="プロフィール画像"
+                        class="profile-img">
+                    <a href="{{ url_for('home', user_id=user.id) }}" class="user-link">
+                        {{ user.user_name }}
+                    </a>
+                </li>
+                <ol class="task-ol">
+                    {% for task in user.task %}
+                    <li class="task-li">
+                        {{ task.title }}
+                    </li>
+                    {% else %}
+                    <li class="no-task">タスクはありません</li>
+                    {% endfor %}
+                </ol>
+            </ul>
+        </div>
+        {% else %}
+        <p class="no-users">ユーザーが見つかりませんでした。</p>
+        {% endfor %}
+    </div>
+
+{% endblock  %}

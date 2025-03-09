@@ -1,0 +1,26 @@
+
+h2{
+  margin-bottom: 0%;
+}
+
+.TaskList{
+  padding-left: 10%;
+}
+/* チェックボックス */
+.checkbox {
+    background-color: white;
+    color: black;
+    font-style: bold;
+}
+
+/* テキストボックス */
+/* .form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  label {
+    width: 20%;
+    text-align: left;
+    font-weight: bold;
+  }
+} */
