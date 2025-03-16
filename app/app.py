@@ -4,10 +4,17 @@ from werkzeug.utils import secure_filename
 from models.models import Task, User
 from models.database import db_session
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditForm
 import secrets
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///to_do.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = 'app/static/uploads'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # シークレットキーを設定
 app.secret_key = secrets.token_hex(16) 
@@ -30,7 +37,8 @@ def lists():
 @login_required
 def home(user_id):
     task_lists = Task.query.filter_by(user_id=user_id).all()
-    return render_template("home.html",task_lists=task_lists)
+    user = User.query.get(user_id)
+    return render_template("home.html", user=user, task_lists=task_lists)
 
 @app.route("/add", methods=["post"])
 @login_required
@@ -115,5 +123,20 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/user/<int:user_id>/edit_profile', methods=["get", "post"])
+@login_required
+def edit_profile(user_id):
+    form = EditForm(obj=current_user)
+    if form.validate_on_submit():
+        current_user.user_name = form.user_name.data
+        current_user.email = form.email.data
+        
+        if form.profile_img.data:
+            current_user.save_profile_image(form.profile_img.data)
+        db_session.commit()
+        flash("Edit User Profile successfully!")
+        return redirect(url_for('home', user_id=current_user.id))
+    return render_template("edit_profile.html", form=form) 
+    
 if __name__ == "__main__":
     app.run(debug=True)

@@ -19,10 +19,11 @@
     color: #0984e3;
 }
 
-.profile-image {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 15px;
+.home-profile-image{
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    object-fit: cover;  /* 画像をトリミングして円形に */
 }
 
 .profile p {

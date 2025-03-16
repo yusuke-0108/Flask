@@ -8,13 +8,18 @@
 <div class="container">
     <aside class="profile">
         <h2>プロフィール</h2>
-        <img src="profile.jpg" alt="プロフィール画像" class="profile-image">
-        <p><strong>ユーザー名:</strong> John Doe</p>
-        <p><strong>メール:</strong> john.doe@example.com</p>
+        {% if "default-profile.png" in user.profile_img %}
+            <img src="static/images/default-profile.png" alt="プロフィール画像" class="home-profile-image">
+        {% else %}
+            <img src="{{ url_for('static', filename=user.profile_img) }}" alt="プロフィール画像" class="home-profile-image">
+        {% endif %}
+        <p><strong>ユーザー名:</strong> {{ user.user_name }}</p>
+        <p><strong>メール:</strong> {{ user.email }}</p>
         <p><strong>自己紹介:</strong></p>
         <p>趣味はプログラミングと旅行です。</p>
     </aside>
 
+    {% if user == current_user %}
     <aside class="form-aside">
         <h1>投稿フォーム</h1>
         <form action="/add" method="post" class="post-form">
@@ -41,7 +46,9 @@
             <input type="submit" value="保存" class="btn-submit">
         </form>
     </aside>
+    {% endif %}
 </div>
+
 <h1>タスク一覧</h1>
 {% for task in task_lists %}
 <div>

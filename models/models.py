@@ -3,16 +3,11 @@ from models.database import Base
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import UserMixin
+from flask import current_app
+import os
 
-# パスワードをハッシュ化
-def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-# 入力されたパスワードが登録されているパスワードハッシュと一致するかを確認
-def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-    
 class Task(Base):
     __tablename__ = 'tasks'
     id = Column(Integer, primary_key=True)
@@ -42,6 +37,7 @@ class User(Base, UserMixin):
     user_name = Column(String(52), unique=True)
     email = Column(String(52), unique=True)
     hashed_pass = Column(String(128))
+    profile_img = Column(String(255), default="default-profile.png")
     
     task = relationship("Task", back_populates="user")
     
@@ -58,3 +54,13 @@ class User(Base, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.hashed_pass, password)
+    
+    def save_profile_image(self, file):
+        if file:
+            filename = secure_filename(file.filename)
+            user_folder = os.path.join(current_app.config['UPLOAD_FOLDER'], f"user/{self.id}")
+            os.makedirs(user_folder, exist_ok=True)  
+            
+            file_path = os.path.join(user_folder, filename)
+            file.save(file_path)
+            self.profile_img = f"uploads/user/{self.id}/{filename}"

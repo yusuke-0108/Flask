@@ -36,6 +36,7 @@
     border-radius: 50%;
     margin-right: 10px;
     border: 1px solid #ddd;
+    object-fit: cover;  /* 画像をトリミングして円形に */
 }
 
 .user-link {
